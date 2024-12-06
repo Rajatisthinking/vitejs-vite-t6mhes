@@ -4,7 +4,16 @@ import { MonthSelector } from '../../components/analytics/location/MonthSelector
 import { LocationSelector } from '../../components/analytics/location/LocationSelector';
 import { WeeklyFootfallChart } from '../../components/analytics/location/WeeklyFootfallChart';
 import { MetricsCards } from '../../components/analytics/location/MetricsCards';
+import { ShoppersOriginTable } from '../../components/analytics/location/ShoppersOriginTable';
 import { useLocationData } from '../../hooks/useLocationData';
+
+const mockShopperOrigins = [
+  { location: 'Downtown Area', percentage: 35 },
+  { location: 'Suburban Districts', percentage: 25 },
+  { location: 'Neighboring Cities', percentage: 20 },
+  { location: 'Business District', percentage: 15 },
+  { location: 'Other Regions', percentage: 5 }
+];
 
 export function LocationAnalytics() {
   const { 
@@ -37,6 +46,10 @@ export function LocationAnalytics() {
         </div>
 
         <MetricsCards metrics={metrics} />
+
+        <div className="mt-6">
+          <ShoppersOriginTable data={mockShopperOrigins} />
+        </div>
       </div>
     </div>
   );

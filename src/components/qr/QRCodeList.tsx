@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { useQRCodeStore } from '../../stores/qrCodeStore';
-import { useRedirectStore } from '../../stores/redirectStore';
 import { QRPreview } from './QRPreview';
 import { Search, Clock, Download, Copy, Link, CheckCircle, Trash2, Edit2, ArrowUpDown } from 'lucide-react';
 import { QRCodeSort } from '../../types/qrcode';
@@ -13,7 +12,6 @@ export function QRCodeList() {
   const [editUrl, setEditUrl] = useState('');
   
   const { qrCodes, updateQRCode, deleteQRCode, sort, setSort } = useQRCodeStore();
-  const setRedirect = useRedirectStore((state) => state.setRedirect);
 
   const handleSort = (field: QRCodeSort['field']) => {
     setSort({
@@ -53,11 +51,7 @@ export function QRCodeList() {
   };
 
   const handleUpdate = (id: string) => {
-    const qrCode = qrCodes.find(code => code.id === id);
-    if (qrCode) {
-      updateQRCode(id, { name: editName, url: editUrl });
-      setRedirect(qrCode.shortUrl, editUrl);
-    }
+    updateQRCode(id, { name: editName, url: editUrl });
     setEditingId(null);
     setEditName('');
     setEditUrl('');
@@ -134,7 +128,7 @@ export function QRCodeList() {
                 <div className="bg-white p-2 rounded-lg shadow-sm">
                   <QRPreview 
                     id={code.id}
-                    value={code.shortUrl} 
+                    value={getShortUrl(code.shortUrl)} 
                     size={150} 
                     scale={4} 
                   />
